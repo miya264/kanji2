@@ -70,7 +70,7 @@ if st.sidebar.button("日程調整メール文を作成"):
 
 # メール文作成エリア
 if st.session_state["show_ad_email_button"]:
-    st.markdown("### 案内メール定型文")
+    st.markdown("### 日程調整案内メール定型文")
     default_email = (
         f"件名: 【ご協力お願いします】飲み会日程調整のご案内\n\n"
         f"皆様\n\n"
@@ -425,7 +425,7 @@ if st.session_state.button_clicked:
             st.session_state["show_email_button"] = True  # メール文作成ボタンが押された状態を記録
 
         # 案内メールの定型文生成
-        st.markdown("### 案内メール定型文")
+        st.markdown("### 確定案内メール定型文")
         default_email = (
             f"件名: 【確定】飲み会日程のお知らせ\n\n"
             f"皆様\n\n"
