@@ -2,18 +2,13 @@ import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import uuid
-import json
 
+# Google Sheets API認証設定
 def authenticate_google_sheets():
-    # Streamlit Secrets から JSON 形式の認証情報を取得
-    credentials_dict = st.secrets["GOOGLE_SHEETS_CREDENTIALS"]
-
-    # Google Sheets API用の認証設定
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)
     client = gspread.authorize(creds)
     return client
-
 
 # スプレッドシートからイベント情報を取得
 def get_event_info(key):
@@ -40,6 +35,22 @@ def add_participant_to_sheet(no, key, event_id, event_name, name, role, genre, d
 # Streamlit UI
 st.title("🎉 飲み会日程調整アプリ 🍻")
 st.write("イベント参加登録")
+
+# メインページセクション
+st.sidebar.write("メインページに戻る" )
+main_button = st.sidebar.button("メインページ")  # ボタンにユニークな変数を割り当てる
+
+if main_button:  # ボタンが押された場合
+    st.sidebar.markdown(
+        """
+        <a href="https://kanji2-hciunz3a8mawzimbjmvl7g.streamlit.app/" target="_blank">
+            <button style="background-color:blue; color:white; padding:10px; border:none; cursor:pointer;">
+                Go to Main Page
+            </button>
+        </a>
+        """,
+        unsafe_allow_html=True
+    )
 
 # イベントのkeyを入力
 key = st.text_input("イベントkeyを入力してください")

@@ -89,10 +89,10 @@ if st.session_state["show_ad_email_button"]:
 
 # メインページセクション
 st.sidebar.write("メインページに戻る" )
-main_button = st.button("メインページ")  # ボタンにユニークな変数を割り当てる
+main_button = st.sidebar.button("メインページ")  # ボタンにユニークな変数を割り当てる
 
 if main_button:  # ボタンが押された場合
-    st.markdown(
+    st.sidebar.markdown(
         """
         <a href="https://kanji2-hciunz3a8mawzimbjmvl7g.streamlit.app/" target="_blank">
             <button style="background-color:blue; color:white; padding:10px; border:none; cursor:pointer;">
