@@ -3,12 +3,16 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import uuid
 
-# Google Sheets API認証設定
 def authenticate_google_sheets():
+    # Streamlit Secrets から JSON 形式の認証情報を取得
+    credentials_dict = st.secrets["GOOGLE_SHEETS_CREDENTIALS"]
+
+    # Google Sheets API用の認証設定
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, scope)
     client = gspread.authorize(creds)
     return client
+
 
 # スプレッドシートからイベント情報を取得
 def get_event_info(key):
