@@ -11,12 +11,16 @@ from streamlit_folium import folium_static
 from dotenv import load_dotenv
 import os
 
-# Google Sheets API認証設定
 def authenticate_google_sheets():
+    # Streamlit Secrets から JSON 形式の認証情報を取得
+    credentials_dict = st.secrets["GOOGLE_SHEETS_CREDENTIALS"]
+
+    # Google Sheets API用の認証設定
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, scope)
     client = gspread.authorize(creds)
     return client
+
 
 # スプレッドシートにデータを追加する関数
 def add_event_to_sheet(event_name, event_id, key, place, event_dates):
