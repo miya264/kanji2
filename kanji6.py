@@ -10,16 +10,11 @@ import folium
 from streamlit_folium import folium_static
 from dotenv import load_dotenv
 import os
-import json
-from oauth2client.service_account import ServiceAccountCredentials
 
+# Google Sheets API認証設定
 def authenticate_google_sheets():
-    # Streamlit Secrets から JSON 形式の認証情報を取得
-    credentials_dict = st.secrets["GOOGLE_SHEETS_CREDENTIALS"]
-
-    # Google Sheets API用の認証設定
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)
     client = gspread.authorize(creds)
     return client
 
@@ -91,6 +86,22 @@ if st.session_state["show_ad_email_button"]:
     # 「メール定型文をコピー」ボタン
     if st.button("メール定型文をコピー"):
         st.write("メール定型文をコピーしました！")    
+
+# メインページセクション
+st.sidebar.write("メインページに戻る" )
+main_button = st.button("メインページ")  # ボタンにユニークな変数を割り当てる
+
+if main_button:  # ボタンが押された場合
+    st.markdown(
+        """
+        <a href="https://kanji2-hciunz3a8mawzimbjmvl7g.streamlit.app/" target="_blank">
+            <button style="background-color:blue; color:white; padding:10px; border:none; cursor:pointer;">
+                Go to Main Page
+            </button>
+        </a>
+        """,
+        unsafe_allow_html=True
+    )
 
 #最適日程の算出
 st.title("🎉 飲み会日程調整アプリ 🍻")
