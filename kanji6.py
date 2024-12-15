@@ -10,11 +10,21 @@ import folium
 from streamlit_folium import folium_static
 from dotenv import load_dotenv
 import os
+import json
+from oauth2client.service_account import ServiceAccountCredentials
 
-# Google Sheets API認証設定
 def authenticate_google_sheets():
+    # 環境変数からJSON形式の文字列を取得
+    credentials_json = os.getenv("GOOGLE_SHEETS_CREDENTIALS")
+    if not credentials_json:
+        raise ValueError("GOOGLE_SHEETS_CREDENTIALS is not set.")
+    
+    # JSON文字列を辞書型に変換
+    credentials_dict = json.loads(credentials_json)
+
+    # Google Sheets API用の認証設定
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, scope)
     client = gspread.authorize(creds)
     return client
 
